@@ -1,0 +1,14 @@
+{
+  "name": "CookieShopAPI",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/aalhsn/CookieShopAPI.git",
+  "author": "aalhsn <a.a.alhasan95@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  }
+}
