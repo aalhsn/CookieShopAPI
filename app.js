@@ -1,19 +1,38 @@
+const bodyParser = require("body-parser");
 const express = require("express");
-const cookies = require("./cookies");
+
+// Routes
+const cookieRoutes = require("./routes/cookies");
+
+// database
+const db = require("./db");
 
 const app = express();
 
+app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-    console.log("HELLO");
-    res.json({ message: "Hello World" });
-  });
+app.use((req, res, next) => {
+  console.log("I'm a middleware method");
+  next();
+});
 
-app.get("/cookies", (req, res) => {
-    console.log(cookies);
-    res.json(cookies);
-  });
 
-app.listen(8000, () => {
+app.use("/cookies", cookieRoutes);
+const run = async () => {
+  try {
+    await db.sync();
+  } catch (error) {
+    console.error("Error connecting to the database: ", error);
+  }
+  
+  await app.listen(8000, () => {
     console.log("The application is running on localhost:8000");
   });
+};
+
+app.use((req, res, next) => {
+  res.status(404).json("Path not found");
+});
+run();
+
+
